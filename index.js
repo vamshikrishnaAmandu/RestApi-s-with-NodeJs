@@ -1,7 +1,7 @@
 const express=require('express');
 const Joi =require('joi');
 const app=express();
-app.use(express.json());
+app.use(express.json()); // It parse the body of the request into json object set into req.body
 const courses=[
     {id:1 , name:'Angular'},
     {id:2 , name:'NodeJs'},
