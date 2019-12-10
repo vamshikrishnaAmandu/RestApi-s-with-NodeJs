@@ -55,5 +55,35 @@ app.get('/api/courses/:month/:year' , (req , res) => {
     })
 
 
+
+    app.put('/api/courses/:id' , (req , res) => {
+
+        const course=  courses.find(c => c.id === parseInt(req.params.id));
+        if(!course) {
+            console.log('Entered InSide if ()')
+            res.status(404).send('Course is Not Found For Given Id ');
+        }
+       
+        const result=validateCourse(req.body)
+        if(result.error){
+            res.status(400).send(result.error);
+            return;
+        }
+    
+        course.name=req.body.name;
+        res.send(course)
+        // update course 
+        // return updated course
+
+    })
+
+
+    function validateCourse(course){
+        const schema= {
+            name : Joi.string().min(3).required()
+        };
+        return Joi.validate(course , schema);
+    }
+
 const port=process.env.PORT || 3000
 app.listen(port , () => console.log(`Listing on port ${port} ....`));
