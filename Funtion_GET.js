@@ -17,6 +17,11 @@ app.get('/api/courses' , (req ,res) => {
 // Route Parameters
 app.get('/api/courses/:id' , (req , res) => {
   const course=  courses.find(c => c.id === parseInt(req.params.id));
+  if(!course) {
+      console.log('Entered InSide if ()')
+      res.status(404).send('Course is Not Found For Given Id ');
+  }
+  console.log('Out Side if ()')
 res.send(course)
 })
 
@@ -25,5 +30,5 @@ app.get('/api/courses/:month/:year' , (req , res) => {
     })
 
 
-const port=process.env.PORT || 3000
+const port=process.env.PORT || 5000
 app.listen(port , () => console.log(`Listing on port ${port} ....`));
