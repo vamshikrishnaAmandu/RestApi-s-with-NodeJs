@@ -7,6 +7,8 @@ const morgan = require('morgan');
 const startupDebugger=require('debug')('app:startup');
 const dbDebugger=require('debug')('app:db');
 const app=express();
+app.set('view engine' , 'pug')
+app.set('views' , './views') //default no need to set
 app.use(express.json()); // It parse the body of the request into json object set into req.body
 app.use(helmet());
 app.use(morgan('tiny'));
@@ -41,7 +43,11 @@ const courses=[
 ]
 
 app.get('/',(req , res) => {
-    res.send('Hello World !!!!');
+    res.render('index' , {              // npm i pug -> template engine , in views folder index.pug
+        title : 'My First App' ,
+        message : 'Hello World'
+    })
+   // res.send('Hello World !!!!');
 });
 
 app.get('/api/courses' , (req ,res) => {
