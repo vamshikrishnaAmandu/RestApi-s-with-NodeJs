@@ -4,6 +4,8 @@ const logger=require('./logger');
 const Joi =require('joi');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const startupDebugger=require('debug')('app:startup');
+const dbDebugger=require('debug')('app:db');
 const app=express();
 app.use(express.json()); // It parse the body of the request into json object set into req.body
 app.use(helmet());
@@ -11,9 +13,9 @@ app.use(morgan('tiny'));
 
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
-    console.log('Morgan Enabled ......')
+   startupDebugger('Morgan Enabled ......')
 }
-
+// dbDebugger('Connected database ......')
 app.use(function(req ,res , next) {
     console.log('Authenticating ......')
     next();
@@ -26,6 +28,10 @@ app.use(logger);
 console.log('Application name ::'+config.get('name'));
 console.log('Mail Server ::'+config.get('mail.host'))
 console.log('Mail Password ::'+config.get('mail.password'))
+startupDebugger('startuo Enabled ......')  // npm i debug --> To Enable set env variable in windows set DEBUG=app:startup , in linux export  DEBUG=app:startup
+                                           // To add multiple namespaces set DEBUG=app:startup,app:db or app:*
+                                        // To disable set DEBUG=
+dbDebugger('Connected database ......')
 
 
 const courses=[
