@@ -1,0 +1,6 @@
+{
+    "name":"My First Express App - Development",
+    "mail":{
+       "password":"app_password"
+    }
+}

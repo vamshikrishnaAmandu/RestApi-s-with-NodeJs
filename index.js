@@ -1,4 +1,5 @@
 const express=require('express');
+const config=require('config');
 const logger=require('./logger');
 const Joi =require('joi');
 const helmet = require('helmet');
@@ -19,6 +20,13 @@ app.use(function(req ,res , next) {
 });
 
 app.use(logger);
+
+// Configuration  --> npm i config if we set NODE_ENV=development it picks development.json for production picks production.json
+
+console.log('Application name ::'+config.get('name'));
+console.log('Mail Server ::'+config.get('mail.host'))
+console.log('Mail Password ::'+config.get('mail.password'))
+
 
 const courses=[
     {id:1 , name:'Angular'},
