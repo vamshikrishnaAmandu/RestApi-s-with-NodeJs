@@ -1,7 +1,20 @@
 const express=require('express');
+const logger=require('./logger');
 const Joi =require('joi');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const app=express();
 app.use(express.json()); // It parse the body of the request into json object set into req.body
+app.use(helmet());
+app.use(morgan('tiny'));
+
+app.use(function(req ,res , next) {
+    console.log('Authenticating ......')
+    next();
+});
+
+app.use(logger);
+
 const courses=[
     {id:1 , name:'Angular'},
     {id:2 , name:'NodeJs'},
@@ -38,6 +51,7 @@ app.post('/api/courses' , (req ,res) => {
     courses.push(course);
     res.send(course);
 })
+
 
 
 // Route Parameters
