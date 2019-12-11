@@ -8,6 +8,11 @@ app.use(express.json()); // It parse the body of the request into json object se
 app.use(helmet());
 app.use(morgan('tiny'));
 
+if(app.get('env') === 'development'){
+    app.use(morgan('tiny'));
+    console.log('Morgan Enabled ......')
+}
+
 app.use(function(req ,res , next) {
     console.log('Authenticating ......')
     next();
